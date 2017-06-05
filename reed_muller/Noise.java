@@ -19,7 +19,9 @@ public class Noise {
         return word;
     }
 
-    public static void add(PGM pgm, double probability){
-        //return null;
+    public static void add(PGM pgm, double probability, int length){
+        for (int i = 0; i < pgm.getData().size(); i++) {
+            pgm.getData().set(i, add(pgm.getData().get(i), probability, length));
+        }
     }
 }

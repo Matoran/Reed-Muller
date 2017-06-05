@@ -78,6 +78,8 @@ public class Main {
                         break;
                     case 4:
                         mot = reedMuller.denoise(mot);
+                        mot = reedMuller.denoiseSemiExhaustive(mot);
+                        //mot = reedMuller.denoise(mot);
                         // vos opérations pour le débruitage du mot courant,
                         // ne rien afficher sur la sortie standard
                         break;
@@ -110,7 +112,7 @@ public class Main {
                         // ne rien afficher sur la sortie standard
                         break;
                     case 3:
-                        Noise.add(pgm, seuil);
+                        Noise.add(pgm, seuil, r+1);
                         // vos opérations pour le bruitage de l'image courante,
                         // ne rien afficher sur la sortie standard
                         break;

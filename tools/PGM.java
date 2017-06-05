@@ -1,5 +1,6 @@
 package tools;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  */
 public class PGM {
     private int lines, columns, highValue;
-    private ArrayList<Integer> data;
+    private ArrayList<BigInteger> data;
 
     public PGM(int lines, int columns, int highValue) {
         this.lines = lines;
@@ -16,7 +17,7 @@ public class PGM {
         data = new ArrayList<>();
     }
 
-    public void add(int val){
+    public void add(BigInteger val){
         data.add(val);
     }
 
@@ -32,7 +33,7 @@ public class PGM {
         return highValue;
     }
 
-    public ArrayList<Integer> getData() {
+    public ArrayList<BigInteger> getData() {
         return data;
     }
 }
