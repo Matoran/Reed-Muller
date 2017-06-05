@@ -41,7 +41,6 @@ public class ReedMuller {
         for(int x = 0; x < max; x++){
             words.add(encode(BigInteger.valueOf(x)));
         }
-        words.forEach((data)-> System.out.println(data.toString(2)));
     }
 
     public BigInteger encode(BigInteger word) {
@@ -95,17 +94,12 @@ public class ReedMuller {
 
 
     public BigInteger denoise(BigInteger word) {
-        String binaryWord = word.toString(2);
-        while (binaryWord.length() < Math.pow(2,r)){
-            binaryWord = "0" + binaryWord;
-        }
-
-        int[] F = new int[binaryWord.length()];
-        for (int i = 0; i < binaryWord.length(); i++) {
-            if(binaryWord.charAt(i) == '0'){
-                F[i] = 1;
-            }else{
+        int[] F = new int[length];
+        for (int i = 0; i < length; i++) {
+            if(word.testBit(length-i-1)){
                 F[i] = -1;
+            }else{
+                F[i] = 1;
             }
         }
 
@@ -115,10 +109,10 @@ public class ReedMuller {
             for(int k = 0; k < Math.pow(2,r-1); k++){
                 valBin = new BigInteger(Integer.toString(k));
                 if(valBin.testBit(i)){
-                    valBin.clearBit(i);
+                    valBin = valBin.clearBit(i);
                     newF[k] = F[k] - F[valBin.intValue()];
                 }else{
-                    valBin.setBit(i);
+                    valBin = valBin.setBit(i);
                     newF[k] = F[k] + F[valBin.intValue()];
                 }
             }
