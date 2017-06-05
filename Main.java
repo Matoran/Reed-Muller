@@ -1,3 +1,4 @@
+import reed_muller.Noise;
 import reed_muller.ReedMuller;
 
 import java.io.*;
@@ -31,6 +32,7 @@ public class Main {
       System.err.println("Mot en clair de (r+1)-bits à encoder sur (2^r)-bits.");
       System.err.println("Choisir la valeur de r: ");
       int r = in.nextInt();
+      ReedMuller reedMuller = new ReedMuller(r);
       System.err.println("\nLe seuil de bruit est la probabilité d'inverser un bit.");
       System.err.println("Choisir un seuil de bruit (nombre entre 0.0 et 1.0): ");
       double seuil = in.nextDouble();
@@ -52,29 +54,33 @@ public class Main {
                      + "5: Réinitialiser\n"
                      + "Opération choisie:"; 
       int choix = 5;
+      BigInteger mot = new BigInteger("0");
       if (mode == 1) {
          do {
             switch(choix) {          
             case 1:
-               ReedMuller.encode()
+               reedMuller.encode(mot);
                // vos opérations pour l'encodage du mot courant,
                // ne rien afficher sur la sortie standard
                break;
             case 2:
+               reedMuller.decode(mot);
                // vos opérations pour le décodage du mot courant,
                // ne rien afficher sur la sortie standard
                break;
             case 3:
+               Noise.add(mot, seuil);
                // vos opérations pour le bruitage du mot courant,
                // ne rien afficher sur la sortie standard
                break;
             case 4:
+               reedMuller.denoise(mot);
                // vos opérations pour le débruitage du mot courant,
                // ne rien afficher sur la sortie standard
                break;            
             case 5:
                System.err.println("\nEntrer un mot (en décimal)");
-               BigInteger mot = new BigInteger(in.next());
+               mot = new BigInteger(in.next());
                break;  
             }
             if (choix != 5) {
