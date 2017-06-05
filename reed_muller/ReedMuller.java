@@ -3,6 +3,8 @@ package reed_muller;
 import tools.PGM;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by matoran on 6/5/17.
@@ -67,7 +69,7 @@ public class ReedMuller {
     public BigInteger decode(BigInteger wordEncoded) {
         BigInteger wordDecoded = new BigInteger("0");
 
-        if(wordEncoded.testBit((int)Math.pow(2,r)-1)){
+        if(wordEncoded.testBit(0)){
             wordEncoded = wordEncoded.not();
             wordDecoded = wordDecoded.setBit(r);
         }
@@ -76,14 +78,61 @@ public class ReedMuller {
             wordDecoded = wordEncoded.testBit((int)Math.pow(2,i)) ? wordDecoded.setBit(i) : wordDecoded.clearBit(i);
         }
 
-        System.out.println(wordDecoded);
+        //System.out.println(wordDecoded);
 
         return wordDecoded;
 
     }
 
-    public void denoise(BigInteger mot) {
+    public BigInteger denoise(BigInteger word) {
+        String binaryWord = word.toString(2);
+        while (binaryWord.length() < Math.pow(2,r)){
+            binaryWord = "0" + binaryWord;
+        }
 
+        int[] F = new int[binaryWord.length()];
+        for (int i = 0; i < binaryWord.length(); i++) {
+            if(binaryWord.charAt(i) == '0'){
+                F[i] = 1;
+            }else{
+                F[i] = -1;
+            }
+        }
+
+        BigInteger valBin;
+        for (int i = 0; i < r-1; i++) {
+            int[] newF = new int[(int)Math.pow(2,r-1)];
+            for(int k = 0; k < Math.pow(2,r-1); k++){
+                valBin = new BigInteger(Integer.toString(k));
+                if(valBin.testBit(i)){
+                    valBin.clearBit(i);
+                    newF[k] = F[k] - F[valBin.intValue()];
+                }else{
+                    valBin.setBit(i);
+                    newF[k] = F[k] + F[valBin.intValue()];
+                }
+            }
+            F = newF;
+        }
+
+        ArrayList<Integer> FAbs = new ArrayList<Integer>();
+        for (int i = 0; i < F.length; i++) {
+            FAbs.add(Math.abs(F[i]));
+        }
+
+        int maxF = Collections.max(FAbs);
+
+        int indexMaxF = FAbs.indexOf(maxF);
+
+        BigInteger wordDenoise;
+
+        if(F[indexMaxF] < 0){
+            wordDenoise = new BigInteger(Integer.toString((indexMaxF + (int)Math.pow(2,r))));
+        }else{
+            wordDenoise = new BigInteger(Integer.toString(indexMaxF));
+        }
+
+        return wordDenoise;
     }
 
     public void encode(PGM pgm) {
