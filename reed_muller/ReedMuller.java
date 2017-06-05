@@ -96,30 +96,28 @@ public class ReedMuller {
     public BigInteger denoise(BigInteger word) {
         int[] F = new int[length];
         for (int i = 0; i < length; i++) {
-            if(word.testBit(length-i-1)){
+            if(word.testBit(i)){
                 F[i] = -1;
             }else{
                 F[i] = 1;
             }
         }
 
-        BigInteger valBin;
-        for (int i = 0; i < r-1; i++) {
-            int[] newF = new int[(int)Math.pow(2,r-1)];
-            for(int k = 0; k < Math.pow(2,r-1); k++){
-                valBin = new BigInteger(Integer.toString(k));
-                if(valBin.testBit(i)){
-                    valBin = valBin.clearBit(i);
-                    newF[k] = F[k] - F[valBin.intValue()];
+        BigInteger q;
+        for (int i = 0; i < r; i++) {
+            int[] newF = new int[(int)Math.pow(2,r)];
+            for(int k = 0; k < Math.pow(2,r); k++){
+                q = BigInteger.valueOf(k).flipBit(i);
+                if(q.testBit(i)){
+                    newF[k] = F[k] + F[q.intValue()];
                 }else{
-                    valBin = valBin.setBit(i);
-                    newF[k] = F[k] + F[valBin.intValue()];
+                    newF[k] = F[q.intValue()] - F[k];
                 }
             }
             F = newF;
         }
 
-        ArrayList<Integer> FAbs = new ArrayList<Integer>();
+        ArrayList<Integer> FAbs = new ArrayList<>();
         for (int i = 0; i < F.length; i++) {
             FAbs.add(Math.abs(F[i]));
         }
