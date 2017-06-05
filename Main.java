@@ -7,6 +7,15 @@ import java.io.*;
 import java.util.*;
 import java.math.*;
 
+
+/**
+ * @author ISELI Cyril & RODRIGUES Marco
+ * @version 0.1
+ * @date June 2017
+ * @file Main.java
+ * <p>
+ * Main
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -63,24 +72,24 @@ public class Main {
                 switch (choix) {
                     case 1:
                         mot = reedMuller.encode(mot);
-                        // vos opérations pour l'encodage du mot courant,
-                        // ne rien afficher sur la sortie standard
                         break;
                     case 2:
                         mot = reedMuller.decode(mot);
-                        // vos opérations pour le décodage du mot courant,
-                        // ne rien afficher sur la sortie standard
                         break;
                     case 3:
-                        mot = Noise.add(mot, seuil, r + 1);
-                        // vos opérations pour le bruitage du mot courant,
-                        // ne rien afficher sur la sortie standard
+                        mot = Noise.add(mot, seuil);
                         break;
                     case 4:
-                        mot = reedMuller.denoise(mot);
-                        //mot = reedMuller.denoiseSemiExhaustive(mot);
-                        // vos opérations pour le débruitage du mot courant,
-                        // ne rien afficher sur la sortie standard
+                        System.err.println("1. fast\n2. semi-exhaustive");
+                        int choixDebruitage = in.nextInt();
+                        switch (choixDebruitage) {
+                            case 1:
+                                mot = reedMuller.denoise(mot);
+                                break;
+                            case 2:
+                                mot = reedMuller.denoiseSemiExhaustive(mot);
+                                break;
+                        }
                         break;
                     case 5:
                         System.err.println("\nEntrer un mot (en décimal)");
@@ -89,8 +98,6 @@ public class Main {
                 }
                 if (choix != 5) {
                     System.err.println("Valeur du mot courant (en décimal):");
-                    // imprimer la valeur du mot courant en décimal
-                    // sur la sortie standard
                     System.out.println(mot);
                 }
                 System.err.println(menu);
@@ -102,35 +109,34 @@ public class Main {
                 switch (choix) {
                     case 1:
                         reedMuller.encode(pgm);
-                        // vos opérations pour l'encodage de l'image courante,
-                        // ne rien afficher sur la sortie standard
                         break;
                     case 2:
                         reedMuller.decode(pgm);
-                        // vos opérations pour le décodage de l'image courante,
-                        // ne rien afficher sur la sortie standard
                         break;
                     case 3:
-                        Noise.add(pgm, seuil, r+1);
-                        // vos opérations pour le bruitage de l'image courante,
-                        // ne rien afficher sur la sortie standard
+                        Noise.add(pgm, seuil);
                         break;
                     case 4:
-                        reedMuller.denoise(pgm);
-                        // vos opérations pour le débruitage de l'image courante,
-                        // ne rien afficher sur la sortie standard
+                        System.err.println("1. fast\n2. semi-exhaustive");
+                        int choixDebruitage = in.nextInt();
+                        switch (choixDebruitage) {
+                            case 1:
+                                reedMuller.denoise(pgm);
+                                break;
+                            case 2:
+                                reedMuller.denoiseSemiExhaustive(pgm);
+                                break;
+                        }
                         break;
                     case 5:
                         System.err.println("Nom du fichier de l'image à charger (format png):");
                         fileName = in.next();
-                        // lire le fichier contenant l'image pgm
                         pgm = ParserPGM.read(fileName);
                         break;
                 }
                 if (choix != 5) {
                     System.err.println("Nom du fichier où sauver l'image courante (format png):");
                     fileName = in.next();
-                    // sauver l'image courante au format pgm
                     ParserPGM.save(fileName, pgm);
                 }
                 System.err.println(menu);
@@ -139,17 +145,3 @@ public class Main {
         }
     }
 }
-
-//Encoder => Décoder ou Bruiter ou Réinitialiser
-//Décoder => Encoder ou Réinitialiser
-//Bruiter => Débruiter ou Bruiter ou Réinitialiser
-//Débruiter => Bruiter ou Décoder ou Réinitialiser
-
-
-
-
-
-
-
-
-

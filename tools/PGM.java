@@ -4,32 +4,44 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
- * Created by matoran on 6/5/17.
+ * @author ISELI Cyril & RODRIGUES Marco
+ * @version 0.1
+ * @date June 2017
+ * @file PGM.java
+ * <p>
+ * PGM class, store a pgm file
  */
 public class PGM {
     private int lines, columns, highValue;
     private ArrayList<BigInteger> data;
 
-    public PGM(int lines, int columns, int highValue) {
+    /**
+     * constructor
+     * @param lines number of lines in the image
+     * @param columns number of columns in the image
+     * @param highValue high grey value in the image
+     */
+    PGM(int lines, int columns, int highValue) {
         this.lines = lines;
         this.columns = columns;
         this.highValue = highValue;
-        data = new ArrayList<>();
+        data = new ArrayList<>(lines*columns);
     }
 
-    public void add(BigInteger val){
+    void add(BigInteger val){
         data.add(val);
     }
 
-    public int getLines() {
+    //--------------------Getters-------------------------------
+    int getLines() {
         return lines;
     }
 
-    public int getColumns() {
+    int getColumns() {
         return columns;
     }
 
-    public int getHighValue() {
+    int getHighValue() {
         return highValue;
     }
 
