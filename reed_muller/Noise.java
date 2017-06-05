@@ -1,5 +1,7 @@
 package reed_muller;
 
+import tools.PGM;
+
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -8,12 +10,16 @@ import java.util.Random;
  */
 public class Noise {
     private static Random random = new Random();
-    public static BigInteger add(BigInteger word, double probability){
-        for (int i = 0; i < word.bitCount(); i++) {
+    public static BigInteger add(BigInteger word, double probability, int length){
+        for (int i = 0; i < length; i++) {
             if(random.nextDouble() < probability){
                 word = word.flipBit(i);
             }
         }
         return word;
+    }
+
+    public static void add(PGM pgm, double probability){
+        //return null;
     }
 }

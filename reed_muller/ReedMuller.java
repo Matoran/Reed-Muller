@@ -1,5 +1,7 @@
 package reed_muller;
 
+import tools.PGM;
+
 import java.math.BigInteger;
 
 /**
@@ -20,6 +22,18 @@ public class ReedMuller {
     }
 
     public void denoise(BigInteger mot) {
+
+    }
+
+    public void encode(PGM pgm) {
+
+    }
+
+    public void decode(PGM pgm) {
+
+    }
+
+    public void denoise(PGM pgm) {
 
     }
 }
