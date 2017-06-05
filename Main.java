@@ -77,7 +77,7 @@ public class Main {
                         // ne rien afficher sur la sortie standard
                         break;
                     case 4:
-                        mot = reedMuller.denoise(mot);
+                        //mot = reedMuller.denoise(mot);
                         // vos opérations pour le débruitage du mot courant,
                         // ne rien afficher sur la sortie standard
                         break;
