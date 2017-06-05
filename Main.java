@@ -1,3 +1,5 @@
+import reed_muller.ReedMuller;
+
 import java.io.*;
 import java.util.*;
 import java.math.*;
@@ -54,6 +56,7 @@ public class Main {
          do {
             switch(choix) {          
             case 1:
+               ReedMuller.encode()
                // vos opérations pour l'encodage du mot courant,
                // ne rien afficher sur la sortie standard
                break;
