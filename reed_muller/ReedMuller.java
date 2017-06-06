@@ -99,11 +99,12 @@ public class ReedMuller {
         return wordDecoded;
     }
 
-    /**
-     * @param word
-     * @return
+    /** Calculate the quick search view in class
+     * @param word word previously encoded
+     * @return wordDenoise
      */
     public BigInteger denoise(BigInteger word) {
+        //Change the 0 in 1 and 1 in -1
         int[] F = new int[length];
         for (int i = 0; i < length; i++) {
             if (word.testBit(i)) {
@@ -113,6 +114,7 @@ public class ReedMuller {
             }
         }
 
+        //Calculate the f
         BigInteger q;
         for (int i = 0; i < r; i++) {
             int[] newF = new int[(int) Math.pow(2, r)];
@@ -127,15 +129,18 @@ public class ReedMuller {
             F = newF;
         }
 
+        //Transform the f^ in absolute value
         ArrayList<Integer> FAbs = new ArrayList<>();
         for (int i = 0; i < F.length; i++) {
             FAbs.add(Math.abs(F[i]));
         }
 
+        //Find the max value in f
         int maxF = Collections.max(FAbs);
 
         int indexMaxF = FAbs.indexOf(maxF);
 
+        //Return the word
         BigInteger wordDenoise;
 
         if (F[indexMaxF] < 0) {
