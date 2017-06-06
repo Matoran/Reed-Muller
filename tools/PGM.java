@@ -28,6 +28,10 @@ public class PGM {
         data = new ArrayList<>(lines*columns);
     }
 
+    /**
+     * add a pixel
+     * @param val pixel value (encoded or not)
+     */
     void add(BigInteger val){
         data.add(val);
     }
